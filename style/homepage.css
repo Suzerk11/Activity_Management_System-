@@ -1,0 +1,65 @@
+/* styles.css */
+
+/* 自定义活动卡片样式 */
+
+body {
+
+    margin: 0;
+    padding: 0;
+    background-image: url("../img/bg_1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+
+    color: #787878; /* 白色文本颜色 */
+}
+
+.act-img {
+    margin-bottom: 30px;
+    max-width: 100px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+}
+
+#sidebar {
+    background-color: #3C4B79; /* 橙色侧边栏 */
+    width: 30%; /* 30%宽度的侧边栏 */
+    min-height: 100vh;
+}
+#main-content {
+     /* background-color: #3C4B79;深蓝色主内容区域 */
+    padding: 20px;
+}
+.welcome {
+    background-color: #3C4B79; /* 橙色欢迎语背景 */
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-style: italic;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.activity-card {
+    background-color: #fff;  /*白色活动卡片背景 */
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+
+/* 添加上下边距 */
+.activity-card h3,
+.activity-card p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.breadcrumb{
+    line-height: 15px;
+    font-weight: 600;
+
+}
+
