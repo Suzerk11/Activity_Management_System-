@@ -1,4 +1,3 @@
-<!-- <?php session_start() ?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +9,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ActivityRec</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet/less" type="text/css" href="./style/actipage.less">
+
+
 </head>
 
 
@@ -54,29 +56,32 @@
     </div>
     <!-- main page -->
     <main class="mainbox">
+      <!-- breadcrumb -->
       <nav aria-label="breadcrumb" class="breadcrumb mt-1">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="./homepage.php">Homepage</a></li>
           <li class="breadcrumb-item active" aria-current="page">Rec Activity</li>
         </ol>
       </nav>
+
       <!-- line of posted activities -->
       <div class="d-flex flex-wrap">
         <h1 class="headline">Recent Activities</h1>
-        <button type="button" class="btn btn-primary mx-1 ms-auto">Post an Activity!</button>
+        <button type="button" class="btn btn-primary mx-1 ms-auto post-button">Post an Activity!</button>
       </div>
       <nav class="navbar bg-body-tertiary mx-1 mt-2 ps-2 card" style="background-color: rgb(red, green, blue,0.5);">
         <div class="container-fluid p-0">
-          <form class="d-flex formstyle flex-wrap" role="search">
-            <input class="form-control me-3 mt-1" type="search" placeholder="Search" aria-label="Search" style=" width: 60%">
-            <select class="form-select me-3 mt-1" aria-label="Default select example" style="width: 25%;">
-              <option selected>Sports</option>
-              <option value="1">Career</option>
-              <option value="2">Emergency</option>
-              <option value="3">Seminar</option>
+          <div class="d-flex formstyle flex-wrap" role="search">
+            <input class="form-control me-3 mt-1" type="search" id='inputId' placeholder="Search by Activity ID" aria-label="Search" style=" width: 60%">
+            <select id="categorySelect" class="form-select me-3 mt-1" aria-label="Default select example" style="width: 25%;">
+              <option selected disabled hidden>Select an option</option>
+              <!-- <option value="1">Sports</option>
+              <option value="2">Career</option>
+              <option value="3">Emergency</option>
+              <option value="4">Seminar</option> -->
             </select>
-            <button class="btn btn-outline-success mt-1" type="submit">Search</button>
-          </form>
+            <button class="btn btn-outline-success mt-1 submit" type="submit">Search</button>
+          </div>
 
         </div>
       </nav>
@@ -106,7 +111,11 @@
 
 
             foreach ($activities as $row) {
-              $row['enrolleduserlist'] = explode(',', substr($row["enrolleduserlist"], 1, -1));
+              if ($row["enrolleduserlist"] == '{}') {
+                $row['enrolleduserlist'] = [];
+              } else {
+                $row['enrolleduserlist'] = explode(',', substr($row["enrolleduserlist"], 1, -1));
+              }
               $row["actpic"] = explode(',', substr($row["actpic"], 1, -1));
               $enrolledNum = count($row['enrolleduserlist']);
               $cate = $db->query("select * from category where cateid = $1", $row["actcate"]);
@@ -118,14 +127,100 @@
               echo '<td>' .  $enrolledNum . '/' . $row['actlimit'] . '</td>';
               echo '<td>' . $cate[0]['catename'] . '</td>';
               echo '<td class="tds">';
-              echo '<button type="button" class="btn btn-success my-1" data-id="' . $row['actid'] . '">View</button>';
-              echo '<button type="button" class="btn btn-danger my-1 mx-1 enroll-button" data-id="' . $row['actid'] . '">Enroll</button>';
+              echo '<button type="button" class="btn btn-success my-1 view-button" data-id="' . $row['actid'] . '">View</button>';
+              echo '<button type="button" class="btn btn-primary my-1 mx-1 enroll-button" data-id="' . $row['actid'] . '">Enroll</button>';
+              echo '<button type="button" class="btn btn-danger my-1  drop-button" data-id="' . $row['actid'] . '">Drop</button>';
+
               echo '</td>';
               echo '</tr>';
             }
             ?>
           </tbody>
         </table>
+      </div>
+
+      <!-- form -->
+      <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="postModalLabel">Post an Activity</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="postForm">
+                <div class="row mb-2">
+                  <label for="actname" class="form-label col-sm-2">Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actname" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <label for="actlimit" class="form-label col-sm-2">Limit</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actlimit" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <label for="actloc" class="form-label col-sm-2">Location</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actloc" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <label for="actpic" class="form-label col-sm-2">Pictures</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actpic" required>
+                  </div>
+                </div>
+                <!-- 
+                <div class="row mb-2">
+                  <label class="form-label">Time</label>
+                  <div class="row">
+                    <label class="form-label col-sm-2">Date</label>
+                    <input type="text" class="form-control col-sm-10" id="actdate" required>
+                  </div> -->
+                <!-- <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actbegintime" required>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actendtime" required>
+                  </div> -->
+                <!-- </div> -->
+
+                <div class="row mb-2">
+                  <!-- <label class="form-label col-sm-2">Time</label> -->
+                  <!-- <div class="col-sm-10"> -->
+                  <!-- <div class="row"> -->
+                  <label class="form-label col-sm-2">Date</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control datetimepicker-input" id="actdate" data-toggle="datetimepicker" data-target="#actdate" required>
+                  </div>
+                  <!-- </div> -->
+                  <!-- </div> -->
+                </div>
+
+                <div class="row mb-2">
+                  <label for="actcate" class="form-label col-sm-2">Category</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actcate" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <label for="actdesc" class="form-label col-sm-2">Description</label>
+                  <textarea class="form-control" id="actdesc" rows="4" required></textarea>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -135,8 +230,13 @@
     const navi = document.querySelector('.navigation')
     const imgbox = document.querySelector('.imgbox')
     const spans = document.querySelectorAll('.navigation span')
-
-    // cate
+    // $(function() {
+    $('#actdate').datepicker({
+      format: 'YYYY-MM-DD HH:mm:ss',
+      // 你可以根据需要进行其他配置
+    });
+    // });
+    cate
     const cate = {
       1: "Sports and Fitness",
       2: "Arts and Culture",
@@ -145,16 +245,103 @@
       5: "Travel and Adventure"
 
     }
+
+    // get select options
+    for (const key in cate) {
+      if (cate) {
+        const option = $('<option/>', {
+          value: key,
+          text: cate[key]
+        });
+        $('#categorySelect').append(option);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const postButton = $('.post-button');
+      const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+      $('.post-button').on('click', function() {
+        postModal.show();
+      });
+
+      const postForm = document.getElementById('postForm');
+
+      postForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const actname = document.getElementById('actname').value;
+        // 获取其他字段的值
+
+        // 构建包含用户填写数据的对象
+        const activityData = {
+          actname: actname,
+          // 添加其他字段
+        };
+
+        // 发送数据到服务器（你需要使用实际的URL和逻辑）
+        sendDataToServer(activityData);
+
+        // 关闭模态框
+        postModal.hide();
+      });
+
+      function sendDataToServer(data) {
+        // 使用 XMLHttpRequest 或 Fetch API 将数据发送到服务器
+        // 这里只是一个示例，你需要根据你的实际需求进行修改
+        console.log('Sending data to server:', data);
+      }
+    });
+
     // get all enroll button
     const enrollButtons = document.querySelectorAll('.enroll-button');
     // function enroll
     enrollButtons.forEach(button => {
       button.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        console.log(id)
-        enrollUser(id);
+        const id = this.getAttribute('data-id')
+        // console.log(id)
+        enrollUser(id)
       });
     });
+
+    // get all view button
+    const viewButtons = document.querySelectorAll('.view-button');
+    // function enroll
+    viewButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id')
+        // console.log(id)
+        window.location.href = `detailsActivity.php?id=${id}`;
+      });
+    });
+
+    // get all drop-button
+    const dropButtons = document.querySelectorAll('.drop-button');
+    dropButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id')
+        // console.log(id)
+        dropActivity(id)
+      });
+    });
+
+    function dropActivity(id) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'actController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(JSON.parse(xhr.responseText));
+          // not enrolled cannot_drop
+          if (xhr.responseText.includes('cannot_drop')) {
+            alert('Drop failed. You are not in this activity.');
+          } else {
+            updateTable(JSON.parse(xhr.responseText));
+
+          }
+        }
+      };
+      xhr.send('actId=' + id + '&action=drop');
+    }
 
     function enrollUser(id) {
       const xhr = new XMLHttpRequest();
@@ -163,11 +350,19 @@
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           console.log(xhr.responseText);
-          updateTable(JSON.parse(xhr.responseText));
+          // if already enrolled
+          if (xhr.responseText.includes('already_enrolled')) {
+            alert('Enrollment failed. You are already in this activity.');
+          } else {
+            updateTable(JSON.parse(xhr.responseText));
+
+          }
+
+
         }
       };
-      xhr.send('actId=' + id);
-      // location.reload();
+      // console.log(id);
+      xhr.send('actId=' + id + '&action=enroll');
     }
 
     function updateTable(data) {
@@ -181,8 +376,15 @@
 
       data.forEach(function(row) {
         // console.log(row);
+        let userListArray
+        if (row.enrolleduserlist == "{}") {
+          userListArray = []
+        } else {
+          userListArray = row.enrolleduserlist.replace(/[{} ]/g, '').split(',')
 
-        const userListArray = row.enrolleduserlist.replace(/[{} ]/g, '').split(',');
+        }
+        // userListArray = userListArray.slice(1)
+        console.log(userListArray);
 
         const newRow = document.createElement('tr')
         newRow.innerHTML = `
@@ -193,8 +395,9 @@
           <td>${userListArray.length}/${row.actlimit}</td>
           <td>${cate[row.actcate]}</td>
           <td class="tds">
-            <button type="button" class="btn btn-success my-1" data-id="${row.actid}">View</button>
-            <button type="button" class="btn btn-danger my-1 mx-1 enroll-button" data-id="${row.actid}">Enroll</button>
+            <button type="button" class="btn btn-success my-1 view-button" data-id="${row.actid}">View</button>
+            <button type="button" class="btn btn-primary my-1 mx-1 enroll-button" data-id="${row.actid}">Enroll</button>
+            <button type="button" class="btn btn-danger my-1 drop-button" data-id="${row.actid}">Drop</button>
           </td>
         `
 
@@ -212,8 +415,69 @@
           enrollUser(id)
         });
       });
+
+      // get all view button
+      const viewButtons = document.querySelectorAll('.view-button');
+      // function enroll
+      viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id')
+          // console.log(id)
+          window.location.href = `detailsActivity.php?id=${id}`;
+        });
+      });
+
+      // get all drop-button
+      const dropButtons = document.querySelectorAll('.drop-button');
+      dropButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id')
+          // console.log(id)
+          dropActivity(id)
+        });
+      });
     }
 
+    //submit form search  
+    $('.submit').on('click', () => {
+      if (!$('#inputId').val() && !$('.form-select').val()) {
+
+        alert('Please fill the form.');
+        location.reload();
+
+
+      } else {
+        searchActivities($('#inputId').val(), $('.form-select').val())
+      }
+    })
+
+    function searchActivities(searchid, cateid) {
+      // 先解决id
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'actController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+          // not find
+          if (xhr.responseText == '[]') {
+            alert('Not find the related data.');
+            location.reload();
+
+          } else {
+            updateTable(JSON.parse(xhr.responseText));
+
+          }
+        }
+      };
+      if (searchid && cateid) {
+        xhr.send('searchid=' + searchid + '&searchcate=' + cateid + '&action=search');
+      } else if (searchid) {
+        xhr.send('searchid=' + searchid + '&action=search');
+      } else {
+        xhr.send('searchcate=' + cateid + '&action=search');
+      }
+    }
 
     // function navigation
     listbox.addEventListener('click', function() {
@@ -231,8 +495,6 @@
           span.style.opacity = '1'
         }
         mainbox.style.paddingLeft = '18%'
-
-
         // console.log(imgbox.classList);
 
       }
@@ -241,6 +503,10 @@
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/less"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
 
 </body>
 
