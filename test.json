@@ -1,0 +1,14 @@
+{
+  "actName": "Career Fair",
+  "actLoc": "Nau Hall",
+  "actDate": "2023-10-31",
+  "actBeginTime": "15:00:00",
+  "actEndTime": "19:00:00",
+  "actLimit": 50,
+  "actCate": 2,
+  "actDesc": "This is a test case 1",
+  "actPic": [
+    "https://cs4640.cs.virginia.edu/bzd7cx/hw2/img/img1.jpg"
+  ],
+  "enrolledUserList": []
+}

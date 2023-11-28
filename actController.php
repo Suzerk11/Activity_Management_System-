@@ -9,6 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     dropActivity();
   } elseif ($_POST['action'] === 'search') {
     searchActivity();
+  } elseif ($_POST['action'] === 'create') {
+    createActivity();
   }
 }
 
@@ -114,6 +116,48 @@ function searchActivity()
     $res = $db->query("SELECT * FROM activity WHERE actcate = $searchcate");
   }
 
+  header('Content-Type: application/json');
+  echo json_encode($res);
+}
+
+
+function createActivity()
+{
+  $db = new Database();
+  // $res = $db->query("insert into activity (actName,
+  // actLoc,actDate,actBeginTime,actEndTime,actLimit,actCate,user_id,userEmail,
+  // actDesc,actPic,enrolledUserList) values 
+  //     ($1, $2, $3, $4, $5,$6, $7, $8, $9 ,$10, $11, $12);");
+
+  $query = "INSERT INTO activity (actName, actLoc, actDate, actBeginTime, actEndTime, actLimit, actCate, user_id, userEmail, actDesc, actPic, enrolledUserList) 
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)";
+
+  $data = json_decode($_POST['data'], true);
+  // echo $data['actname'];
+  // modify
+  $actPicArray = '{' . implode(',', $data["actpic"]) . '}';
+  $enrolledUserListArray = '{' . implode(',', $data["enrolleduserlist"]) . '}';
+
+  // 执行带参数的查询
+  $res = $db->query(
+    $query,
+    $data["actname"],
+    $data["actloc"],
+    $data["actdate"],
+    $data["actbegintime"],
+    $data["actendtime"],
+    $data["actlimit"],
+    $data["actcate"],
+    // $data["user_id"],
+    '1',
+    '1186@111.com',
+    // $data["userEmail"],
+    $data["actdesc"],
+    $actPicArray,
+    $enrolledUserListArray
+  );
+
+  $res = $db->query("select * from activity order by actid");
   header('Content-Type: application/json');
   echo json_encode($res);
 }

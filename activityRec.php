@@ -12,6 +12,8 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet/less" type="text/css" href="./style/actipage.less">
+  <!-- https://layuiweb.com/laydate/index.htm -->
+  <script src="./node_modules\layui-laydate\src\laydate.js"></script>
 
 
 </head>
@@ -149,70 +151,70 @@
             </div>
             <div class="modal-body">
               <form id="postForm">
-                <div class="row mb-2">
-                  <label for="actname" class="form-label col-sm-2">Name</label>
+                <div class="row mb-2 align-items-center">
+                  <label for="actname" class="form-label col-sm-2  mb-0">Name</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="actname" required>
                   </div>
                 </div>
 
-                <div class="row mb-2">
-                  <label for="actlimit" class="form-label col-sm-2">Limit</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="actlimit" required>
-                  </div>
-                </div>
-
-                <div class="row mb-2">
-                  <label for="actloc" class="form-label col-sm-2">Location</label>
+                <div class="row mb-2 align-items-center">
+                  <label for="actloc" class="form-label col-sm-2  mb-0">Location</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="actloc" required>
                   </div>
                 </div>
 
-                <div class="row mb-2">
-                  <label for="actpic" class="form-label col-sm-2">Pictures</label>
+                <div class="row mb-2 align-items-center">
+                  <label for="actpic" class="form-label col-sm-2  mb-0">Pictures</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="actpic" required>
                   </div>
                 </div>
-                <!-- 
-                <div class="row mb-2">
-                  <label class="form-label">Time</label>
-                  <div class="row">
-                    <label class="form-label col-sm-2">Date</label>
-                    <input type="text" class="form-control col-sm-10" id="actdate" required>
-                  </div> -->
-                <!-- <div class="col-sm-10">
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actpic" class="form-label col-sm-2  mb-0">Date</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actdate" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label class="form-label col-sm-2  mb-0">Time</label>
+                  <div class="col-sm-4">
                     <input type="text" class="form-control" id="actbegintime" required>
                   </div>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="actendtime" required>
-                  </div> -->
-                <!-- </div> -->
 
-                <div class="row mb-2">
-                  <!-- <label class="form-label col-sm-2">Time</label> -->
-                  <!-- <div class="col-sm-10"> -->
-                  <!-- <div class="row"> -->
-                  <label class="form-label col-sm-2">Date</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control datetimepicker-input" id="actdate" data-toggle="datetimepicker" data-target="#actdate" required>
+                  <div class="col-sm-1">
+                    <p class="text-center mb-0"> TO </p>
                   </div>
-                  <!-- </div> -->
-                  <!-- </div> -->
-                </div>
 
-                <div class="row mb-2">
-                  <label for="actcate" class="form-label col-sm-2">Category</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="actcate" required>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control " id="actendtime" required>
                   </div>
                 </div>
 
-                <div class="row mb-2">
-                  <label for="actdesc" class="form-label col-sm-2">Description</label>
-                  <textarea class="form-control" id="actdesc" rows="4" required></textarea>
+                <div class="row mb-2 align-items-center">
+                  <label for="actcate" class="form-label col-sm-2 mb-0">Category</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" id="actcate">
+                      <option selected disabled hidden>Select an option</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actlimit" class="form-label col-sm-2  mb-0">Limit</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actlimit" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                  <label for="actdesc" class="form-label   mb-0">Description</label>
+                  <div>
+                    <textarea class="form-control mt-1" id="actdesc" rows="4" required></textarea>
+                  </div>
                 </div>
 
 
@@ -231,12 +233,22 @@
     const imgbox = document.querySelector('.imgbox')
     const spans = document.querySelectorAll('.navigation span')
     // $(function() {
-    $('#actdate').datepicker({
-      format: 'YYYY-MM-DD HH:mm:ss',
-      // 你可以根据需要进行其他配置
+    laydate.render({
+      elem: '#actdate',
+      lang: 'en'
     });
-    // });
-    cate
+    laydate.render({
+      elem: '#actbegintime',
+      type: 'time',
+      lang: 'en'
+    });
+    laydate.render({
+      elem: '#actendtime',
+      type: 'time',
+      lang: 'en'
+    });
+
+
     const cate = {
       1: "Sports and Fitness",
       2: "Arts and Culture",
@@ -254,6 +266,7 @@
           text: cate[key]
         });
         $('#categorySelect').append(option);
+        $('#actcate').append(option);
       }
     }
 
@@ -268,27 +281,41 @@
 
       postForm.addEventListener('submit', function(event) {
         event.preventDefault();
+        let inputs = document.querySelectorAll("#postForm input, textarea, #postForm select");
+        console.log(inputs);
+        let formData = {}
+        inputs.forEach(function(input) {
+          if (input.id == 'actpic') {
+            formData['actpic'] = [input.value];
 
-        const actname = document.getElementById('actname').value;
-        // 获取其他字段的值
+          } else {
+            formData[input.id] = input.value;
+          }
+        });
+        formData['enrolleduserlist'] = []
+        console.log(formData);
 
-        // 构建包含用户填写数据的对象
-        const activityData = {
-          actname: actname,
-          // 添加其他字段
-        };
-
-        // 发送数据到服务器（你需要使用实际的URL和逻辑）
-        sendDataToServer(activityData);
-
-        // 关闭模态框
+        sendDataToServer(formData);
         postModal.hide();
       });
 
       function sendDataToServer(data) {
-        // 使用 XMLHttpRequest 或 Fetch API 将数据发送到服务器
-        // 这里只是一个示例，你需要根据你的实际需求进行修改
-        console.log('Sending data to server:', data);
+        data = JSON.stringify(data)
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'actController.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+            console.log(JSON.parse(xhr.responseText));
+
+
+            updateTable(JSON.parse(xhr.responseText));
+
+
+          }
+        };
+        xhr.send('data=' + data + '&action=create');
       }
     });
 

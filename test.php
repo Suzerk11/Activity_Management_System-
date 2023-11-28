@@ -3,46 +3,42 @@ require_once('database.php');
 
 session_start();
 $db = new Database();
-$actId = 2;
-updateActivities($actId);
+// $res = $db->query("insert into activity (actName,
+// actLoc,actDate,actBeginTime,actEndTime,actLimit,actCate,user_id,userEmail,
+// actDesc,actPic,enrolledUserList) values 
+//     ($1, $2, $3, $4, $5,$6, $7, $8, $9 ,$10, $11, $12);");
+$data = json_decode(
+  file_get_contents("./test.json"),
+  true
+);
 
-function updateActivities($actId)
-{
-  // session_start();
-  $db = new Database();
+$query = "INSERT INTO activity (actName, actLoc, actDate, actBeginTime, actEndTime, actLimit, actCate, user_id, userEmail, actDesc, actPic, enrolledUserList) 
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)";
 
-  // $userId = $_SESSION["user_id"];
-  $userId = 2;
-  // echo $_SESSION["user_id"];
-  $enrolledUserList = search();
-  print_r($enrolledUserList);
-  // if (in_array($userId, $enrolledUserList)) {
-  //   // $_SESSION['enrollwrong'] = '1';
-  //   echo '111';
-  // } else {
-  //   echo '222';
-  //   // $_SESSION['enrollwrong'] = '0';
+// $data = json_decode($_POST['data']);
+// modify
+$actPicArray = '{' . implode(',', $data["actPic"]) . '}';
+$enrolledUserListArray = '{' . implode(',', $data["enrolledUserList"]) . '}';
 
-  //   $res = $db->query("update activity set enrolledUserList = array_append(enrolledUserList, $userId) where actid = $actId");
+// 执行带参数的查询
+$res = $db->query(
+  $query,
+  $data["actName"],
+  $data["actLoc"],
+  $data["actDate"],
+  $data["actBeginTime"],
+  $data["actEndTime"],
+  $data["actLimit"],
+  $data["actCate"],
+  // $data["user_id"],
+  '1',
+  '1186@111.com',
+  // $data["userEmail"],
+  $data["actDesc"],
+  $actPicArray,
+  $enrolledUserListArray
+);
 
-  //   // should update the user
-  //   // $db->query("update users set enroll_list = array_append(enroll_list, $actId) where user_id = $userId");
-  // }
-  $res = $db->query("select * from activity order by actid");
-
-
-
-  header('Content-Type: application/json');
-  echo json_encode($res);
-}
-
-function search()
-{
-  $db = new Database();
-  // $actId = $_POST['actId'];
-  $actId = 1;
-  $enrolledUserList = $db->query("SELECT * FROM activity WHERE actid = $actId");
-  print_r($enrolledUserList[0]);
-  $enrolledUserList = explode(',', str_replace(['{', '}', ' '], '', $enrolledUserList[0]['enrolleduserlist']));
-  return $enrolledUserList;
-}
+$res = $db->query("select * from activity order by actid");
+header('Content-Type: application/json');
+echo json_encode($res);
