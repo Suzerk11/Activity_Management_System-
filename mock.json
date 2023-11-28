@@ -25,7 +25,7 @@
     "actEndTime": "19:00:00",
     "actLimit": 50,
     "actCate": 2,
-    "user_id": 2,
+    "user_id": 123,
     "userEmail": "bzd7cx@virginia.edu",
     "actDesc": "This is a test case 1",
     "actPic": [
@@ -44,6 +44,24 @@
     "actLimit": 50,
     "actCate": 1,
     "user_id": 2,
+    "userEmail": "bzd7cx@virginia.edu",
+    "actDesc": "This is a test case 1",
+    "actPic": [
+      "https://cs4640.cs.virginia.edu/bzd7cx/hw2/img/img1.jpg"
+    ],
+    "enrolledUserList": [
+      1
+    ]
+  },
+  {
+    "actName": "Basketball",
+    "actLoc": "Nau Hall",
+    "actDate": "2023-10-31",
+    "actBeginTime": "15:00:00",
+    "actEndTime": "19:00:00",
+    "actLimit": 50,
+    "actCate": 1,
+    "user_id": 123,
     "userEmail": "bzd7cx@virginia.edu",
     "actDesc": "This is a test case 1",
     "actPic": [

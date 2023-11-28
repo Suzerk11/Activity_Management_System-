@@ -1,3 +1,6 @@
+<?php
+session_start();
+$user_id = $_SESSION["user_id"]; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +18,7 @@
 </head>
 
 <body>
+
   <div style="height: 100%;">
     <!-- nav -->
     <div class="navigation">
@@ -81,7 +85,7 @@
         </div>
       </nav>
       <!-- table -->
-      <div class="table-responsive card mt-2 mx-1" style="height: 350px">
+      <!-- <div class="table-responsive card mt-2 mx-1" style="height: 350px">
         <table class="table table-striped table-hover ">
           <thead>
             <tr>
@@ -126,15 +130,196 @@
             </tr>
           </tbody>
         </table>
+      </div> -->
+      <div class="table-responsive card mt-2 mx-1">
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Activity Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Time</th>
+              <th>Status</th>
+              <th>Class</th>
+              <th>ACT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            // session_start();
+            include('posController.php');
+            require_once('database.php');
+            // echo getActivities($user_id) == 'empty';
+            if (getActivities($user_id) == 'empty') {
+              $activities = [];
+              // echo '<script>alert("No activities available.");</script>';
+            } else {
+              $activities = json_decode(getActivities($user_id), true);
+            }
+
+
+
+            foreach ($activities as $row) {
+              if ($row["enrolleduserlist"] == '{}') {
+                $row['enrolleduserlist'] = [];
+              } else {
+                $row['enrolleduserlist'] = explode(',', substr($row["enrolleduserlist"], 1, -1));
+              }
+              $row["actpic"] = explode(',', substr($row["actpic"], 1, -1));
+              $enrolledNum = count($row['enrolleduserlist']);
+              $cate = $db->query("select * from category where cateid = $1", $row["actcate"]);
+              echo '<tr>';
+              echo '<th scope="row">' . $row['actid'] . '</th>';
+              echo '<td>' . $row['actname'] . '</td>';
+              echo '<td>' . $row['actloc'] . '</td>';
+              echo '<td>' . $row['actdate'] . '</td>';
+              echo '<td>' .  $enrolledNum . '/' . $row['actlimit'] . '</td>';
+              echo '<td>' . $cate[0]['catename'] . '</td>';
+              echo '<td class="tds">';
+              echo '<button type="button" class="btn btn-success my-1 view-button" data-id="' . $row['actid'] . '">View</button>';
+              echo '<button type="button" class="btn btn-primary my-1 mx-1 edit-button" data-id="' . $row['actid'] . '">Edit</button>';
+              echo '<button type="button" class="btn btn-danger my-1 delete-button" data-id="' . $row['actid'] . '">Delete</button>';
+
+              echo '</td>';
+              echo '</tr>';
+            }
+            ?>
+          </tbody>
+        </table>
       </div>
     </main>
   </div>
   <script>
+    const cate = {
+      1: "Sports and Fitness",
+      2: "Arts and Culture",
+      3: "Entertainment",
+      4: "Food and Dining",
+      5: "Travel and Adventure"
+
+    }
     const mainbox = document.querySelector('.mainbox')
     const listbox = document.querySelector('.listbox')
     const navi = document.querySelector('.navigation')
     const imgbox = document.querySelector('.imgbox')
     const spans = document.querySelectorAll('.navigation span')
+
+    // get all view button
+    const viewButtons = document.querySelectorAll('.view-button');
+    // function enroll
+    viewButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id')
+        // console.log(id)
+        window.location.href = `detailsActivity.php?id=${id}`;
+      });
+    });
+
+    // get all delete button
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    // function enroll
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id')
+        console.log(id)
+        deleteActivity(id)
+      });
+    });
+
+    function deleteActivity(id) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'posController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+          if (xhr.responseText.includes('empty')) {
+            alert('You have no posted activity.');
+            updateTable([])
+          } else {
+            updateTable(JSON.parse(xhr.responseText));
+
+          }
+
+
+
+          // updateTable(JSON.parse(xhr.responseText));
+        }
+      };
+      xhr.send('actId=' + id + '&action=delete');
+    }
+
+    function updateTable(data) {
+      const table = document.querySelector('table tbody');
+      table.innerHTML = '';
+
+      data.forEach(function(row) {
+        // console.log(row);
+        let userListArray
+        if (row.enrolleduserlist == "{}") {
+          userListArray = []
+        } else {
+          userListArray = row.enrolleduserlist.replace(/[{} ]/g, '').split(',')
+
+        }
+        // userListArray = userListArray.slice(1)
+        // console.log(userListArray);
+
+        const newRow = document.createElement('tr')
+        newRow.innerHTML = `
+          <th scope="row">${row.actid}</th>
+          <td>${row.actname}</td>
+          <td>${row.actloc}</td>
+          <td>${row.actdate}</td>
+          <td>${userListArray.length}/${row.actlimit}</td>
+          <td>${cate[row.actcate]}</td>
+          <td class="tds">
+            <button type="button" class="btn btn-success my-1 view-button" data-id="${row.actid}">View</button>
+            <button type="button" class="btn btn-primary my-1 mx-1 edit-button" data-id="${row.actid}">Edit</button>
+            <button type="button" class="btn btn-danger my-1 delete-button" data-id="${row.actid}">Delete</button>
+          </td>
+        `
+
+        table.appendChild(newRow)
+
+      });
+      // // get all enroll button
+      // const enrollButtons = document.querySelectorAll('.enroll-button')
+      // // console.log(enrollButtons)
+      // // // function enroll
+      // enrollButtons.forEach(button => {
+      //   button.addEventListener('click', function() {
+      //     const id = this.getAttribute('data-id')
+      //     console.log(id)
+      //     enrollUser(id)
+      //   });
+      // });
+
+      // get all view button
+      const viewButtons = document.querySelectorAll('.view-button');
+      // function enroll
+      viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id')
+          // console.log(id)
+          window.location.href = `detailsActivity.php?id=${id}`;
+        });
+      });
+
+      // get all delete button
+      const deleteButtons = document.querySelectorAll('.delete-button');
+      // function enroll
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id')
+          console.log(id)
+          deleteActivity(id)
+        });
+      });
+
+      // lack of edit button
+    }
+
     listbox.addEventListener('click', function() {
       if (imgbox.classList.contains('activenav')) {
         navi.style.width = '7%'
