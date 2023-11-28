@@ -54,7 +54,7 @@ function updateActivities($actId)
     $res = $db->query("update activity set enrolledUserList = array_append(enrolledUserList, $userId) where actid = $actId");
 
     // should update the user
-    // $db->query("update users set enroll_list = array_append(enroll_list, $actId) where user_id = $userId");
+    $db->query("update users set enroll_list = array_append(enroll_list, $actId) where user_id = $userId");
   }
   $res = $db->query("select * from activity order by actid");
 
@@ -79,8 +79,7 @@ function dropActivity()
     $res = $db->query("update activity set enrolledUserList = array_remove(enrolledUserList, $userId) where actid = $actId");
 
     // should update the user
-    // $db->query("update users set enroll_list = array_append(enroll_list, $actId) where user_id = $userId");
-
+    $db->query("update users set enroll_list = array_remove(enroll_list, $actId) where user_id = $userId");
   } else {
     echo 'cannot_drop';
     // $_SESSION['dropwrong'] = '1';
@@ -157,6 +156,11 @@ function createActivity()
     $actPicArray,
     $enrolledUserListArray
   );
+  $actid = $db->query('SELECT lastval()')[0]['lastval'];
+  // echo $actid;
+  // should update the user
+  $userId = $_SESSION['user_id'];
+  $db->query("update users set activity_list = array_append(activity_list, $actid) where user_id = $userId");
 
   $res = $db->query("select * from activity order by actid");
   header('Content-Type: application/json');

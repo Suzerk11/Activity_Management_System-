@@ -15,6 +15,8 @@ $user_id = $_SESSION["user_id"]; ?>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet/less" type="text/css" href="./style/actipage.less">
+  <script src="./node_modules\layui-laydate\src\laydate.js"></script>
+
 </head>
 
 <body>
@@ -69,68 +71,23 @@ $user_id = $_SESSION["user_id"]; ?>
         <h1 class="headline">My Posted Activities</h1>
         <button type="button" class="btn btn-primary mx-1 ms-auto">Post an Activity!</button>
       </div>
-      <nav class="navbar bg-body-tertiary mx-1 mt-2 ps-2 card">
+      <nav class="navbar bg-body-tertiary mx-1 mt-2 ps-2 card" style="background-color: rgb(red, green, blue,0.5);">
         <div class="container-fluid p-0">
-          <form class="d-flex formstyle flex-wrap" role="search">
-            <input class="form-control me-3 mt-1" type="search" placeholder="Search" aria-label="Search" style=" width: 60%">
-            <select class="form-select me-3 mt-1" aria-label="Default select example" style="width: 25%;">
-              <option selected>Sports</option>
-              <option value="1">Career</option>
-              <option value="2">Emergency</option>
-              <option value="3">Seminar</option>
+          <div class="d-flex formstyle flex-wrap" role="search">
+            <input class="form-control me-3 mt-1" type="search" id='inputId' placeholder="Search by Activity ID" aria-label="Search" style=" width: 60%">
+            <select id="categorySelect" class="form-select me-3 mt-1" aria-label="Default select example" style="width: 25%;">
+              <option selected disabled hidden>Select an option</option>
+              <!-- <option value="1">Sports</option>
+              <option value="2">Career</option>
+              <option value="3">Emergency</option>
+              <option value="4">Seminar</option> -->
             </select>
-            <button class="btn btn-outline-success mt-1" type="submit">Search</button>
-          </form>
+            <button class="btn btn-outline-success mt-1 submit" type="submit">Search</button>
+          </div>
 
         </div>
       </nav>
       <!-- table -->
-      <!-- <div class="table-responsive card mt-2 mx-1" style="height: 350px">
-        <table class="table table-striped table-hover ">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Activity Name</th>
-              <th scope="col">Location</th>
-              <th scope="col">Time</th>
-              <th>Status</th>
-              <th>Class</th>
-              <th>ACT</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Pizza Chat</td>
-              <td>Rice Hall</td>
-              <td>Sep. 4</td>
-              <td>90/100</td>
-              <td>Sports</td>
-              <td>
-                <button type="button" class="btn btn-success my-1">View</button>
-                <button type="button" class="btn btn-primary my-1">Edit</button>
-                <button type="button" class="btn btn-danger my-1">Delete</button>
-              </td>
-            </tr>
-            <tr class="tablerow">
-              <th scope="row">2</th>
-              <td>Thornton</td>
-              <td>Jacob</td>
-              <td>Sep. 4</td>
-              <td>90/100
-
-
-              </td>
-              <td>Sports</td>
-              <td>
-                <button type="button" class="btn btn-success my-1">View</button>
-                <button type="button" class="btn btn-primary my-1">Edit</button>
-                <button type="button" class="btn btn-danger my-1">Enroll</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
       <div class="table-responsive card mt-2 mx-1">
         <table class="table table-striped table-hover ">
           <thead>
@@ -187,9 +144,122 @@ $user_id = $_SESSION["user_id"]; ?>
           </tbody>
         </table>
       </div>
+
+      <!-- form -->
+      <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="postModalLabel">Post an Activity</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="postForm">
+                <div class="row mb-2 align-items-center">
+                  <label for="actname" class="form-label col-sm-2  mb-0">Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actname" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="useremail" class="form-label col-sm-2  mb-0">Email</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="useremail" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actloc" class="form-label col-sm-2  mb-0">Location</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actloc" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actpic" class="form-label col-sm-2  mb-0">Pictures</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actpic" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actpic" class="form-label col-sm-2  mb-0">Date</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actdate" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label class="form-label col-sm-2  mb-0">Time</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="actbegintime" required>
+                  </div>
+
+                  <div class="col-sm-1">
+                    <p class="text-center mb-0"> TO </p>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control " id="actendtime" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actcate" class="form-label col-sm-2 mb-0">Category</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" id="actcate">
+                      <option selected disabled hidden>Select an option</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
+                  <label for="actlimit" class="form-label col-sm-2  mb-0">Limit</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="actlimit" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                  <label for="actdesc" class="form-label   mb-0">Description</label>
+                  <div>
+                    <textarea class="form-control mt-1" id="actdesc" rows="4" required></textarea>
+                  </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
   <script>
+    const mainbox = document.querySelector('.mainbox')
+    const listbox = document.querySelector('.listbox')
+    const navi = document.querySelector('.navigation')
+    const imgbox = document.querySelector('.imgbox')
+    const spans = document.querySelectorAll('.navigation span')
+
+    // time selector
+    laydate.render({
+      elem: '#actdate',
+      lang: 'en'
+    });
+    laydate.render({
+      elem: '#actbegintime',
+      type: 'time',
+      lang: 'en'
+    });
+    laydate.render({
+      elem: '#actendtime',
+      type: 'time',
+      lang: 'en'
+    });
+
     const cate = {
       1: "Sports and Fitness",
       2: "Arts and Culture",
@@ -198,11 +268,154 @@ $user_id = $_SESSION["user_id"]; ?>
       5: "Travel and Adventure"
 
     }
-    const mainbox = document.querySelector('.mainbox')
-    const listbox = document.querySelector('.listbox')
-    const navi = document.querySelector('.navigation')
-    const imgbox = document.querySelector('.imgbox')
-    const spans = document.querySelectorAll('.navigation span')
+
+    // get select options
+    for (const key in cate) {
+      if (cate.hasOwnProperty(key)) {
+        const option = $('<option/>', {
+          value: key,
+          text: cate[key]
+        });
+        $('#categorySelect, #actcate').append(option);
+
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const postButton = $('.edit-button');
+
+      const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+      $('.edit-button').on('click', function() {
+        let actid = this.getAttribute('data-id');
+        // get details data
+        // console.log(actid);
+        let data = getDetailsData(actid, (data) => {
+          // console.log(data)
+          populateForm(data)
+        })
+        postModal.show();
+
+        const postForm = document.getElementById('postForm');
+        // update edit
+        postForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          let inputs = document.querySelectorAll("#postForm input, textarea, #postForm select");
+          // console.log(inputs);
+          let formData = {}
+          inputs.forEach(function(input) {
+            if (input.id == 'actpic') {
+              formData['actpic'] = [input.value];
+
+            } else {
+              formData[input.id] = input.value;
+            }
+          });
+          // for update
+          console.log(formData);
+          // console.log(actid);
+          sendDataToServer(formData, actid);
+          postModal.hide();
+        });
+
+
+      });
+
+      function sendDataToServer(data, actid) {
+        data = JSON.stringify(data)
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'posController.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            // console.log(xhr.responseText);
+            // console.log(JSON.parse(xhr.responseText));
+
+            updateTable(JSON.parse(xhr.responseText));
+
+
+          }
+        };
+        xhr.send('data=' + data + '&actid=' + actid + '&action=edit');
+      }
+    });
+
+    // fill the form using data
+    function populateForm(data) {
+      let inputs = document.querySelectorAll("#postForm input, textarea, select");
+
+      inputs.forEach((input) => {
+        const fieldName = input.id;
+        if (fieldName in data) {
+          if (input.tagName === 'SELECT') {
+            const option = input.querySelector(`option[value="${data[fieldName]}"]`);
+            if (option) {
+              option.selected = true;
+            }
+          } else if (fieldName == 'actpic') {
+            const imgList = data['actpic'].replace(/[{} ]/g, '').split(',');
+            input.value = imgList.join()
+          } else {
+            input.value = data[fieldName];
+          }
+        }
+
+      })
+    }
+
+    // getdetailsdata for the one activity that click
+    function getDetailsData(actId, callback) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'detailsController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // console.log(JSON.parse(xhr.responseText));
+          callback(JSON.parse(xhr.responseText))
+          // data = xhr.responseText
+        }
+      };
+      // xhr.send('actId=' + actId);
+      xhr.send('actId=' + actId + '&action=getData');
+    }
+
+    //submit form search  
+    $('.submit').on('click', () => {
+      if (!$('#inputId').val() && !$('.form-select').val()) {
+        alert('Please fill the form.');
+        location.reload();
+      } else {
+        searchActivities($('#inputId').val(), $('.form-select').val())
+      }
+    })
+
+    function searchActivities(searchid, cateid) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'posController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // console.log(xhr.responseText);
+          // not find
+          if (xhr.responseText.includes('empty')) {
+            alert('Not find the related data.');
+            location.reload();
+
+          } else {
+            updateTable(JSON.parse(xhr.responseText));
+
+          }
+        }
+      };
+
+      if (searchid && cateid) {
+        xhr.send('searchid=' + searchid + '&searchcate=' + cateid + '&action=search');
+      } else if (searchid) {
+        xhr.send('searchid=' + searchid + '&action=search');
+      } else {
+        xhr.send('searchcate=' + cateid + '&action=search');
+      }
+    }
+
 
     // get all view button
     const viewButtons = document.querySelectorAll('.view-button');
@@ -345,7 +558,9 @@ $user_id = $_SESSION["user_id"]; ?>
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/less"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
 </body>
 

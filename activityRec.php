@@ -239,7 +239,8 @@
     const navi = document.querySelector('.navigation')
     const imgbox = document.querySelector('.imgbox')
     const spans = document.querySelectorAll('.navigation span')
-    // $(function() {
+
+    // time selector
     laydate.render({
       elem: '#actdate',
       lang: 'en'
@@ -486,7 +487,6 @@
     })
 
     function searchActivities(searchid, cateid) {
-      // 先解决id
       const xhr = new XMLHttpRequest();
       xhr.open('POST', 'actController.php', true);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

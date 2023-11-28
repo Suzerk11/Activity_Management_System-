@@ -56,7 +56,8 @@
         <nav aria-label="breadcrumb" class="breadcrumb mt-1">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="./homepage.php">Homepage</a></li>
-            <li class="breadcrumb-item"><a href="./activityRec.php">Activity</a></li>
+            <li class="breadcrumb-item"><a href="./activityRec.php">Rec Activity</a></li>
+            <li class="breadcrumb-item"><a href="./activityPos.php">POS Activity</a></li>
             <li class="breadcrumb-item active" aria-current="page"><?php echo $_GET['id']; ?></li>
 
           </ol>
