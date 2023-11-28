@@ -260,13 +260,13 @@
 
     // get select options
     for (const key in cate) {
-      if (cate) {
+      if (cate.hasOwnProperty(key)) {
         const option = $('<option/>', {
           value: key,
           text: cate[key]
         });
-        $('#categorySelect').append(option);
-        $('#actcate').append(option);
+        $('#categorySelect, #actcate').append(option);
+
       }
     }
 
@@ -357,7 +357,7 @@
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(JSON.parse(xhr.responseText));
+          // console.log(xhr.responseText);
           // not enrolled cannot_drop
           if (xhr.responseText.includes('cannot_drop')) {
             alert('Drop failed. You are not in this activity.');
@@ -411,7 +411,7 @@
 
         }
         // userListArray = userListArray.slice(1)
-        console.log(userListArray);
+        // console.log(userListArray);
 
         const newRow = document.createElement('tr')
         newRow.innerHTML = `
