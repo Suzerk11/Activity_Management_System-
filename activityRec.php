@@ -159,6 +159,13 @@
                 </div>
 
                 <div class="row mb-2 align-items-center">
+                  <label for="useremail" class="form-label col-sm-2  mb-0">Email</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="useremail" required>
+                  </div>
+                </div>
+
+                <div class="row mb-2 align-items-center">
                   <label for="actloc" class="form-label col-sm-2  mb-0">Location</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="actloc" required>

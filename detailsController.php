@@ -32,8 +32,8 @@ function enrollActivity()
   $db = new Database();
   $actId = $_POST['actId'];
 
-  // $userId = $_SESSION["user_id"];
-  $userId = 2;
+  $userId = $_SESSION["user_id"];
+  // $userId = 2;
   // echo $_SESSION["user_id"];
   $enrolledUserList = search();
   if (in_array($userId, $enrolledUserList)) {
@@ -57,8 +57,8 @@ function dropActivity()
   $db = new Database();
 
   $actId = $_POST['actId'];
-  // $userId = $_SESSION["user_id"];
-  $userId = 2;
+  $userId = $_SESSION["user_id"];
+  // $userId = 2;
   // update the activity
   $enrolledUserList = search();
 

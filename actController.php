@@ -43,8 +43,8 @@ function updateActivities($actId)
   session_start();
   $db = new Database();
 
-  // $userId = $_SESSION["user_id"];
-  $userId = 2;
+  $userId = $_SESSION["user_id"];
+  // $userId = 2;
   // echo $_SESSION["user_id"];
   $enrolledUserList = search();
   if (in_array($userId, $enrolledUserList)) {
@@ -70,8 +70,8 @@ function dropActivity()
   $db = new Database();
 
   $actId = $_POST['actId'];
-  // $userId = $_SESSION["user_id"];
-  $userId = 2;
+  $userId = $_SESSION["user_id"];
+  // $userId = 2;
   // update the activity
   $enrolledUserList = search();
 
@@ -123,6 +123,7 @@ function searchActivity()
 
 function createActivity()
 {
+  session_start();
   $db = new Database();
   // $res = $db->query("insert into activity (actName,
   // actLoc,actDate,actBeginTime,actEndTime,actLimit,actCate,user_id,userEmail,
@@ -148,10 +149,10 @@ function createActivity()
     $data["actendtime"],
     $data["actlimit"],
     $data["actcate"],
+    $_SESSION['user_id'],
     // $data["user_id"],
-    '1',
-    '1186@111.com',
-    // $data["userEmail"],
+    // '1',
+    $data["useremail"],
     $data["actdesc"],
     $actPicArray,
     $enrolledUserListArray

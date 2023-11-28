@@ -80,7 +80,13 @@
         <!-- details -->
         <div class="activity-details card m-2 p-2" style="background-color: rgba(240, 240, 240, 0.5);" id="activityDetails">
           <div class="d-flex flex-wrap">
-            <label><strong>Time: </strong></label><span class='ms-2' id='actbegintime'></span>
+            <label><strong>Date: </strong></label><span class='ms-2' id='actdate'></span>
+          </div>
+          <div class="d-flex flex-wrap">
+            <label><strong>Begin Time: </strong></label><span class='ms-2' id='actbegintime'></span>
+          </div>
+          <div class="d-flex flex-wrap">
+            <label><strong>End Time: </strong></label><span class='ms-2' id='actendtime'></span>
           </div>
           <div class="d-flex flex-wrap">
             <label><strong>Location: </strong></label><span class='ms-2' id='actloc'></span>
@@ -145,6 +151,9 @@
         $('.imgboxs').attr('src', imgList[0]);
         $('.cate-tag').text(cate[data['actcate']])
         $('#actbegintime').text(data['actbegintime'])
+        $('#actendtime').text(data['actendtime'])
+        $('#actdate').text(data['actdate'])
+
         $('#actloc').text(data['actloc'])
         const enrollNum = userListArray.length
         const status = enrollNum + '/' + data['actlimit'];
