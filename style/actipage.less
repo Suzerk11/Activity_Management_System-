@@ -1,0 +1,190 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-image: url("../img/bg_1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+.navigation {
+  // width: 270px;
+  width: 16%; // width: 100px;
+  height: 100%;
+  // display: flex;
+  position: fixed;
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-direction: column;
+  background-color: rgba(15, 35, 95, 0.81);
+  border-radius: 10px;
+  transition: .2s;
+  overflow: hidden;
+}
+
+.mainbox {
+  // width: 100%;
+  padding-top: 2%;
+  padding-left: 18%;
+  padding-right: 1%;
+  transition: .2s;
+}
+
+.box {
+  display: block;
+  height: 70px;
+  // width: 80%;
+  margin: 4px;
+  border-radius: 20px;
+  position: relative;
+  transition: .3s;
+  color: rgb(160, 160, 175);
+  text-decoration: none;
+  /* background-color: #fff; */
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  margin: 50px 0 0 26px;
+}
+
+.box svg {
+  position: absolute;
+  margin: 16px 0 0 22px;
+  width: 30px;
+  height: 30px;
+  fill: white;
+  opacity: 0.8;
+}
+
+.box span {
+  position: relative;
+  top: 21px;
+  left: 62px;
+  font-size: 18px;
+  // .shrinknav() // transition: .1s;
+  .activenav() // opacity: 1;
+}
+
+.listbox {
+  height: 20%;
+  color: rgb(160, 160, 175);
+  /* line-height: 20%; */
+  // margin: 60px auto;
+  // background: black;
+}
+
+.imgbox {
+  width: 100px;
+  height: 60px;
+  margin: 27px 35px 20px 59px;
+}
+
+
+
+.box:hover {
+  background-color: rgb(55, 65, 81);
+  color: #fff;
+
+}
+
+.listbox:hover {
+  cursor: pointer;
+}
+
+.activenav {
+  opacity: 1;
+}
+
+.shrinknav {
+  opacity: 0;
+}
+
+// .navigation:hover span {
+//   opacity: 1;
+// }
+
+// .navigation:hover {
+//   width: 270px;
+// }
+
+// main
+.breadcrumb {
+  line-height: 15px;
+  font-weight: 600;
+
+  a {
+    color: rgba(15, 35, 95, 0.81);
+  }
+}
+
+
+.headline {
+  font-weight: 1000;
+  word-spacing: 10px;
+  font-size: 25px;
+
+}
+
+
+
+.formstyle {
+  width: 100%;
+  // height: 50px;
+  // font-size: large;
+}
+
+.table tbody tr td,
+th {
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 1180px) {
+
+  .listbox {
+    display: none;
+  }
+
+  .box span {
+    opacity: 0;
+  }
+
+  .navigation {
+    width: 80px;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  .navigation {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .mainbox {
+    padding: 15px;
+  }
+
+  .listbox {
+    display: none;
+  }
+
+  .box span {
+    opacity: 1;
+  }
+}
+
+
+@media screen and (max-height: 500px) {
+
+  .listbox {
+    display: none;
+  }
+
+
+}
