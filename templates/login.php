@@ -19,7 +19,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <?=$message?>
+                        <?= $message ?>
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
 
                 <p class="text-center mt-3">No account? Please register first</a></p>
                 <form action="?command=register_page" method="post">
-                <button type="submit" class="btn btn-primary">register</button>
+                    <button type="submit" class="btn btn-primary">register</button>
                 </form>
             </div>
         </div>

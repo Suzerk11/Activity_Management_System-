@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html  lang="en">
+<html lang="en">
+
 <head>
     <meta name="author" content="Rui Xu & Yixuan Ren">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,18 +10,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./style/cover.css">
 </head>
+
 <body>
     <div class="container mt-5">
         <div class="row">
             <div class="col-xs-12">
-                <?=$message?>
+                <?= $message ?>
             </div>
-         </div>
+        </div>
 
         <div class="card">
             <div class="card-body">
                 <h1>User Register</h1>
-                
+
 
                 <form action="?command=register" method="post">
                     <div class="form-group">
@@ -58,4 +60,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

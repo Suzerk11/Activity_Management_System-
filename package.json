@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "layui-laydate": "^5.3.1"
+  }
+}

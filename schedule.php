@@ -9,82 +9,90 @@
   <meta name="keywords" content="chrome">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ActivityPos</title>
+  <title>Schedule</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet/less" type="text/css" href="./style/actipage.less">
   <link rel="stylesheet" href="style/homepage.css">
-  
+
   <style>
     body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
     }
+
     .schedule-container {
-      
-        width: 100%;
-        margin: 10px auto;
-        background-color: #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        overflow: hidden;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); 
-        gap: 10px;
-        padding: 10px;
-       
+
+      width: 100%;
+      margin: 10px auto;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 10px;
+
 
     }
+
     .schedule-header {
-        grid-column: 1 / -1; /* Span all columns */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background-color: #e0e0e0;
+      grid-column: 1 / -1;
+      /* Span all columns */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #e0e0e0;
     }
+
     .schedule-header button {
-        padding: 5px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
+
     .event {
-        background-color: #f9f9f9;
-        border: 1px solid #e0e0e0;
-        border-radius: 5px;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-        /* width: 220px; */
+      /* width: 220px; */
 
     }
+
     .event-date {
-        background-color: #d0e0ff;
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin-bottom: 10px;
+      background-color: #d0e0ff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
     }
+
     .event-description h5 {
-        margin: 0;
-        padding: 0;
+      margin: 0;
+      padding: 0;
     }
+
     .event-time {
-        margin-top: auto;
-        padding-top: 10px;
-        color: #555;
-        width: 100%;
-        text-align: center;
-        border-top: 1px solid #e0e0e0;
+      margin-top: auto;
+      padding-top: 10px;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
     }
+
     .activity-card {
       padding: 5%;
     }
-
-    </style>
+  </style>
 
 </head>
 
@@ -103,8 +111,6 @@
       ">
 
       </div>
-      <!-- <a href="./activityRec.html" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1"
-          xmlns="http://www.w3.org/2000/svg"> -->
       <a href="./activityRec.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M864 128H160c-17.6 0-32 14.4-32 32v704c0 17.6 14.4 32 32 32h704c17.6 0 32-14.4 32-32V160c0-17.6-14.4-32-32-32zM768 640H256v-64h512v64z m0-192H256v-64h512v64z">
           </path>
@@ -113,17 +119,17 @@
           <path d="M686.4 224c-6.4-6.4-6.4-16 0-22.4l68-68c6.4-6.4 16-6.4 22.4 0l112.8 112.8c6.4 6.4 6.4 16 0 22.4l-68 68c-6.4 6.4-16 6.4-22.4 0L686.4 224zM384 776l372-372c5.6-5.6 4.8-15.2-1.6-20.8L641.6 269.6c-6.4-6.4-16-7.2-20.8-1.6L248 640l-56 192 192-56zM64 896v64h896v-64H64z">
           </path>
         </svg><span>Posted ACT</span></a>
-      <a href="#" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <a href="./schedule.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M896 320H128V160c0-17.6 14.4-32 32-32h704c17.6 0 32 14.4 32 32v160zM320 896H160c-17.6 0-32-14.4-32-32V384h192v512zM864 896H384V384h512v480c0 17.6-14.4 32-32 32z">
           </path>
         </svg><span>Schedule</span></a>
-      <a href="./favourites.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <a href="./profile.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M519.2 807.2l255.2 133.6c12 6.4 25.6-4 23.2-16.8L748.8 640c-0.8-4.8 0.8-10.4 4.8-14.4L960 424.8c9.6-9.6 4-25.6-8.8-27.2l-284.8-41.6c-5.6-0.8-9.6-4-12-8.8l-128-257.6c-5.6-12-23.2-12-28.8 0L370.4 348c-2.4 4.8-7.2 8-12 8.8L73.6 398.4c-13.6 1.6-18.4 17.6-8.8 27.2l206.4 200.8c4 4 5.6 8.8 4.8 14.4l-48.8 284c-2.4 12.8 11.2 23.2 23.2 16.8L505.6 808c4-3.2 8.8-3.2 13.6-0.8z">
           </path>
-        </svg><span>Favourites</span></a>
+          <!-- </svg><span>Favourites</span></a>
       <a href="#" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M500 128.8c-95.2 5.6-173.6 83.2-180 178.4-7.2 112 80.8 205.6 191.2 205.6 106.4 0 192-86.4 192-192 0.8-110.4-92-198.4-203.2-192zM512 575.2c-128 0-383.2 64-383.2 192v96c0 17.6 14.4 32 32 32h702.4c17.6 0 32-14.4 32-32V766.4c0-127.2-255.2-191.2-383.2-191.2z">
-          </path>
+          </path> -->
         </svg><span>My Profile</span></a>
     </div>
     <!-- main page -->
@@ -136,10 +142,10 @@
       </nav>
       <!-- line of posted activities -->
       <div class="d-flex flex-wrap">
-        <h1 class="headline">My Recent Activities</h1>
+        <h1 class="headline">Schedule</h1>
         <!-- <button type="button" class="btn btn-primary mx-1 ms-auto">Post an Activity!</button> -->
       </div>
-      <nav class="navbar bg-body-tertiary mx-1 mt-2 ps-2 card">
+      <!-- <nav class="navbar bg-body-tertiary mx-1 mt-2 ps-2 card">
         <div class="container-fluid p-0">
           <form class="d-flex formstyle flex-wrap" role="search">
             <input class="form-control me-3 mt-1" type="search" placeholder="Search" aria-label="Search" style=" width: 60%">
@@ -153,166 +159,166 @@
           </form>
 
         </div>
-      </nav>
+      </nav> -->
 
       <!-- table -->
       <div class="table-responsive card mt-2 mx-1" style="
       display: flex; height: 100%;">
-       
-    <!-- act -->
-    <div class="schedule-header">
-            <button>Prev</button>
-            <h2>Event Schedule</h2>
-            <button>Next</button>
+
+        <!-- act -->
+        <div class="schedule-header">
+          <!-- <button>Prev</button> -->
+          <h2 style="font-size: 20px;">Event Schedule</h2>
+          <!-- <button>Next</button> -->
         </div>
-        
-    <div class="schedule-container">
-        
-        
-        <!-- Event 1 -->
-        <div class="event">
+
+        <div class="schedule-container">
+
+
+          <!-- Event 1 -->
+          <div class="event">
 
             <?php
-              include('actController.php');
-              // echo('here1');
-              // error!!
-              require_once('./functions/Database.php');
-              // echo('here2');
-              $activities = json_decode(getActivities(), true);
+            include('./actController.php');
+            // echo('here1');
+            // error!!
+            require_once('./database.php');
+            // echo('here2');
+            $activities = json_decode(getActivities(), true);
 
-              $todayDate = date('Y-m-d');
-              $Date = date('m-d');
+            $todayDate = date('Y-m-d');
+            $Date = date('m-d');
 
-              $userId = $_SESSION["user_id"];
-              // echo $userId;
-              echo '<div class="event-date">' . $Date . '</div>';
-              
-              foreach ($activities as $row) {
-                // echo gettype($row['enrolleduserlist']);
-                $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
-                // echo $enroll_list[0];
-                // echo $row['enrolleduserlist'];
-                $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
-                
-                if ($row['actdate'] == $todayDate && in_array($userId, $enroll_list) ) {
-                  echo '<div class="activity-card">';
-                  echo '<div class="row">';
-                  echo '<div class="col-md-4">';
-                  echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
-                  echo '</div>';
-                  echo '<div class="col-md-8">';
-                  echo '<h5>' . $row['actname'] . '</h5>';
-                  echo '<p>Location:' . $row['actloc'] . '</p>';
-                  // echo '<p>Date:' . $row['actdate'] . '</p>';
-                  echo '<p>Time:' . $row['actbegintime'] . '</p>';
-                  echo '<p>Time:' . $row['actendtime'] . '</p>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                }
+            $userId = $_SESSION["user_id"];
+            // echo $userId;
+            echo '<div class="event-date">' . $Date . '</div>';
+
+            foreach ($activities as $row) {
+              // echo gettype($row['enrolleduserlist']);
+              $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
+              // echo $enroll_list[0];
+              // echo $row['enrolleduserlist'];
+              $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
+
+              if ($row['actdate'] == $todayDate && in_array($userId, $enroll_list)) {
+                echo '<div class="activity-card">';
+                echo '<div class="row">';
+                echo '<div class="col-md-4">';
+                echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
+                echo '</div>';
+                echo '<div class="col-md-8">';
+                echo '<h5>' . $row['actname'] . '</h5>';
+                echo '<p>Location:' . $row['actloc'] . '</p>';
+                // echo '<p>Date:' . $row['actdate'] . '</p>';
+                echo '<p>Time:' . $row['actbegintime'] . '</p>';
+                echo '<p>Time:' . $row['actendtime'] . '</p>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
               }
-              echo '</div>';
+            }
+            // echo '</div>';
             ?>
-        </div>
-        
-        
-        <!-- Event 2 -->
-        <div class="event">
-        <?php
+          </div>
 
-              $activities = json_decode(getActivities(), true);
 
-              $nextDate = date('Y-m-d', strtotime('+1 day', strtotime('today')));
-              // echo $nextDate ;
-              $Date = date('m-d', strtotime('+1 day', strtotime('today')));
+          <!-- Event 2 -->
+          <div class="event">
+            <?php
 
-              $userId = $_SESSION["user_id"];
-              // echo $userId;
-              echo '<div class="event-date">' . $Date . '</div>';
-              
-              foreach ($activities as $row) {
-                // echo gettype($row['enrolleduserlist']);
-                $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
-                // echo $enroll_list[0];
-                // echo $row['enrolleduserlist'];
-                $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
-                
-                if ($row['actdate'] == $nextDate && in_array($userId, $enroll_list) ) {
-                  echo '<div class="activity-card">';
-                  echo '<div class="row">';
-                  echo '<div class="col-md-4">';
-                  echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
-                  echo '</div>';
-                  echo '<div class="col-md-8">';
-                  echo '<h5>' . $row['actname'] . '</h5>';
-                  echo '<p>Location:' . $row['actloc'] . '</p>';
-                  // echo '<p>Date:' . $row['actdate'] . '</p>';
-                  echo '<p>Time:' . $row['actbegintime'] . '</p>';
-                  echo '<p>Time:' . $row['actendtime'] . '</p>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                }
+            $activities = json_decode(getActivities(), true);
+
+            $nextDate = date('Y-m-d', strtotime('+1 day', strtotime('today')));
+            // echo $nextDate ;
+            $Date = date('m-d', strtotime('+1 day', strtotime('today')));
+
+            $userId = $_SESSION["user_id"];
+            // echo $userId;
+            echo '<div class="event-date">' . $Date . '</div>';
+
+            foreach ($activities as $row) {
+              // echo gettype($row['enrolleduserlist']);
+              $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
+              // echo $enroll_list[0];
+              // echo $row['enrolleduserlist'];
+              $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
+
+              if ($row['actdate'] == $nextDate && in_array($userId, $enroll_list)) {
+                echo '<div class="activity-card">';
+                echo '<div class="row">';
+                echo '<div class="col-md-4">';
+                echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
+                echo '</div>';
+                echo '<div class="col-md-8">';
+                echo '<h5>' . $row['actname'] . '</h5>';
+                echo '<p>Location:' . $row['actloc'] . '</p>';
+                // echo '<p>Date:' . $row['actdate'] . '</p>';
+                echo '<p>Time:' . $row['actbegintime'] . '</p>';
+                echo '<p>Time:' . $row['actendtime'] . '</p>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
               }
-              echo '</div>';
+            }
+            // echo '</div>';
             ?>
-        </div>
-        
-        <!-- Event 3 -->
-        <div class="event">
-        <?php
-              // include('actController.php');
-              // echo('here1');
-              // error!!
-              // require_once('./functions/Database.php');
-              // echo('here2');
-              $activities = json_decode(getActivities(), true);
+          </div>
 
-              $nextnextDate = date('Y-m-d', strtotime('+2 day', strtotime('today')));
-              // echo $nextDate ;
-              $Date = date('m-d', strtotime('+1 day', strtotime('today')));
+          <!-- Event 3 -->
+          <div class="event">
+            <?php
+            // include('actController.php');
+            // echo('here1');
+            // error!!
+            // require_once('./functions/Database.php');
+            // echo('here2');
+            $activities = json_decode(getActivities(), true);
 
-              $userId = $_SESSION["user_id"];
-              // echo $userId;
-              echo '<div class="event-date">' . $Date . '</div>';
-              
-              foreach ($activities as $row) {
-                // echo gettype($row['enrolleduserlist']);
-                $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
-                // echo $enroll_list[0];
-                // echo $row['enrolleduserlist'];
-                $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
-                
-                if ($row['actdate'] == $nextnextDate && in_array($userId, $enroll_list) ) {
-                  echo '<div class="activity-card">';
-                  echo '<div class="row">';
-                  echo '<div class="col-md-4">';
-                  echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
-                  echo '</div>';
-                  echo '<div class="col-md-8">';
-                  echo '<h5>' . $row['actname'] . '</h5>';
-                  echo '<p>Location:' . $row['actloc'] . '</p>';
-                  // echo '<p>Date:' . $row['actdate'] . '</p>';
-                  echo '<p>Time:' . $row['actbegintime'] . '</p>';
-                  echo '<p>Time:' . $row['actendtime'] . '</p>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                }
+            $nextnextDate = date('Y-m-d', strtotime('+2 day', strtotime('today')));
+            // echo $nextDate ;
+            $Date = date('m-d', strtotime('+2 day', strtotime('today')));
+
+            $userId = $_SESSION["user_id"];
+            // echo $userId;
+            echo '<div class="event-date">' . $Date . '</div>';
+
+            foreach ($activities as $row) {
+              // echo gettype($row['enrolleduserlist']);
+              $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
+              // echo $enroll_list[0];
+              // echo $row['enrolleduserlist'];
+              $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
+
+              if ($row['actdate'] == $nextnextDate && in_array($userId, $enroll_list)) {
+                echo '<div class="activity-card">';
+                echo '<div class="row">';
+                echo '<div class="col-md-4">';
+                echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
+                echo '</div>';
+                echo '<div class="col-md-8">';
+                echo '<h5>' . $row['actname'] . '</h5>';
+                echo '<p>Location:' . $row['actloc'] . '</p>';
+                // echo '<p>Date:' . $row['actdate'] . '</p>';
+                echo '<p>Time:' . $row['actbegintime'] . '</p>';
+                echo '<p>Time:' . $row['actendtime'] . '</p>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
               }
-              echo '</div>';
+            }
+            // echo '</div>';
             ?>
+          </div>
+
         </div>
-        
-        </div>
-<!-- end act -->
+        <!-- end act -->
 
 
       </div>
     </main>
   </div>
 
-  
+
   <script>
     const mainbox = document.querySelector('.mainbox')
     const listbox = document.querySelector('.listbox')

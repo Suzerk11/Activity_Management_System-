@@ -1,3 +1,8 @@
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +19,7 @@
   <link rel="stylesheet" href="style/homepage.css">
 
   <script>
-  
+
   </script>
 
 
@@ -47,13 +52,13 @@
           <path d="M896 320H128V160c0-17.6 14.4-32 32-32h704c17.6 0 32 14.4 32 32v160zM320 896H160c-17.6 0-32-14.4-32-32V384h192v512zM864 896H384V384h512v480c0 17.6-14.4 32-32 32z">
           </path>
         </svg><span>Schedule</span></a>
-      <a href="./favourites.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <a href="./profile.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M519.2 807.2l255.2 133.6c12 6.4 25.6-4 23.2-16.8L748.8 640c-0.8-4.8 0.8-10.4 4.8-14.4L960 424.8c9.6-9.6 4-25.6-8.8-27.2l-284.8-41.6c-5.6-0.8-9.6-4-12-8.8l-128-257.6c-5.6-12-23.2-12-28.8 0L370.4 348c-2.4 4.8-7.2 8-12 8.8L73.6 398.4c-13.6 1.6-18.4 17.6-8.8 27.2l206.4 200.8c4 4 5.6 8.8 4.8 14.4l-48.8 284c-2.4 12.8 11.2 23.2 23.2 16.8L505.6 808c4-3.2 8.8-3.2 13.6-0.8z">
           </path>
-        </svg><span>Favourites</span></a>
-      <a href="./profile.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <!-- </svg><span>Favourites</span></a>
+      <a href="#" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M500 128.8c-95.2 5.6-173.6 83.2-180 178.4-7.2 112 80.8 205.6 191.2 205.6 106.4 0 192-86.4 192-192 0.8-110.4-92-198.4-203.2-192zM512 575.2c-128 0-383.2 64-383.2 192v96c0 17.6 14.4 32 32 32h702.4c17.6 0 32-14.4 32-32V766.4c0-127.2-255.2-191.2-383.2-191.2z">
-          </path>
+          </path> -->
         </svg><span>My Profile</span></a>
     </div>
     <!-- main page -->
@@ -67,7 +72,7 @@
       <div class="col-md-9" id="main-content" style="margin: auto;">
         <!-- welcome -->
         <div class="welcome">
-          <h1>Hello, <?= $user_name ?>(<?= $user_id ?>),<br></h1>
+          <h1>Hello, <?= $_SESSION['user_name'] ?>(<?= $_SESSION['user_id'] ?>),<br></h1>
           Welcome to UVA ACT
         </div>
 
@@ -76,43 +81,44 @@
           <!-- left row - Today's activity -->
           <div class="col-md-6">
             <h2 style="color: coral;">Today's activity</h2>
-            
-              
-                <?php
-                  include('actController.php');
-                  // web\www\UvaAct_sp4\functions\Database.php
-                  $userId = $_SESSION["user_id"];
-                  require_once('./functions/Database.php');
-
-                  $activities = json_decode(getActivities(), true);
-                  
-                  $todayDate = date('Y-m-d');
 
 
-                  foreach ($activities as $row) {
+            <?php
+            include('actController.php');
+            // web\www\UvaAct_sp4\functions\Database.php
+            $userId = $_SESSION["user_id"];
+            require_once('database.php');
+            // require_once('./functions/Database.php');
 
-                    $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
-                    // echo $pic[0];                    
+            $activities = json_decode(getActivities(), true);
 
-                    if ($row['actdate'] == $todayDate) {
-                      echo '<div class="activity-card">';
-                      echo '<div class="row">';
-                      echo '<div class="col-md-4">';
-                      echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
-                      echo '</div>';
-                      echo '<div class="col-md-8">';
-                      echo '<h3>' . $row['actname'] . '</h3>';
-                      echo '<p>Location:' . $row['actloc'] . '</p>';
-                      echo '<p>Date:' . $row['actdate'] . '</p>';
-                      echo '<p>Time:' . $row['actbegintime'] . '</p>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</div>';
-                    }
-                  }
-                ?>
+            $todayDate = date('Y-m-d');
 
-                <!-- <div class="col-md-4">
+
+            foreach ($activities as $row) {
+
+              $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
+              // echo $pic[0];                    
+
+              if ($row['actdate'] == $todayDate) {
+                echo '<div class="activity-card">';
+                echo '<div class="row">';
+                echo '<div class="col-md-4">';
+                echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
+                echo '</div>';
+                echo '<div class="col-md-8">';
+                echo '<h3>' . $row['actname'] . '</h3>';
+                echo '<p>Location:' . $row['actloc'] . '</p>';
+                echo '<p>Date:' . $row['actdate'] . '</p>';
+                echo '<p>Time:' . $row['actbegintime'] . '</p>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+              }
+            }
+            ?>
+
+            <!-- <div class="col-md-4">
                   <img src="img/act_1.png" class="act-img" alt="act_pic">
                 </div>
                   <div class="col-md-8">
@@ -126,42 +132,42 @@
           <div class="col-md-6">
             <h2 style="color: #3C4B79;">Today's schedule</h2>
             <?php
-                  // include('actController.php');
-                  // require_once('./functions/Database.php');
+            // include('actController.php');
+            // require_once('./functions/Database.php');
 
-                  $activities = json_decode(getActivities(), true);
+            $activities = json_decode(getActivities(), true);
 
-                  $todayDate = date('Y-m-d');
+            $todayDate = date('Y-m-d');
 
-                  foreach ($activities as $row) {
-                    $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
-                    // echo gettype($row['enrolleduserlist']);
+            foreach ($activities as $row) {
+              $pic = explode(',', str_replace(array('{', '}'), '', $row["actpic"]));
+              // echo gettype($row['enrolleduserlist']);
 
-                    $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
-                    if ($row['actdate'] == $todayDate && in_array($userId, $enroll_list) ) {
-                      echo '<div class="activity-card">';
-                      echo '<div class="row">';
-                      echo '<div class="col-md-4">';
-                      echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
-                      echo '</div>';
-                      echo '<div class="col-md-8">';
-                      echo '<h3>' . $row['actname'] . '</h3>';
-                      echo '<p>Location:' . $row['actloc'] . '</p>';
-                      echo '<p>Date:' . $row['actdate'] . '</p>';
-                      echo '<p>Time:' . $row['actbegintime'] . '</p>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</div>';
-                    }
-                  }
-                ?>
+              $enroll_list = explode(',', str_replace(array('{', '}'), '', $row['enrolleduserlist']));
+              if ($row['actdate'] == $todayDate && in_array($userId, $enroll_list)) {
+                echo '<div class="activity-card">';
+                echo '<div class="row">';
+                echo '<div class="col-md-4">';
+                echo '<img src="' . $pic[0] . '" class="act-img" alt="act_pic">';
+                echo '</div>';
+                echo '<div class="col-md-8">';
+                echo '<h3>' . $row['actname'] . '</h3>';
+                echo '<p>Location:' . $row['actloc'] . '</p>';
+                echo '<p>Date:' . $row['actdate'] . '</p>';
+                echo '<p>Time:' . $row['actbegintime'] . '</p>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+              }
+            }
+            ?>
 
           </div>
         </div>
       </div>
-      <a href="index.php?command=game_over" >Logout here</a>
+      <a href="index.php?command=logout">Logout here</a>
     </main>
-    
+
   </div>
   <script>
     const mainbox = document.querySelector('.mainbox')

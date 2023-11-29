@@ -1,12 +1,12 @@
 <?php
 
-// $host = 'db';
+// $host = 'localhost';
 // $port = '5432';
 // $database = 'bzd7cx';
 // $user = 'bzd7cx';
 // $password = '_xXq1xyWZk0W';
 
-$host = 'db';
+$host = 'localhost';
 $port = '5432';
 $database = "example";
 $user = "localuser";
@@ -24,20 +24,20 @@ if ($dbHandle) {
 // // Drop sequences
 $res  = pg_query($dbHandle, "drop sequence if exists user_seq cascade;");
 $res  = pg_query($dbHandle, "drop sequence if exists act_seq cascade;");
-// $res  = pg_query($dbHandle, "drop sequence if exists img_seq cascade;");
-// $res  = pg_query($dbHandle, "drop sequence if exists cate_seq cascade;");
+$res  = pg_query($dbHandle, "drop sequence if exists img_seq cascade;");
+$res  = pg_query($dbHandle, "drop sequence if exists cate_seq cascade;");
 
 // # drop tables
 $res  = pg_query($dbHandle, "drop table if exists users;");
 $res  = pg_query($dbHandle, "drop table if exists activity;");
-// $res  = pg_query($dbHandle, "drop table if exists images;");
-// $res  = pg_query($dbHandle, "drop table if exists category;");
+$res  = pg_query($dbHandle, "drop table if exists images;");
+$res  = pg_query($dbHandle, "drop table if exists category;");
 
 // // Create sequences
 // $res  = pg_query($dbHandle, "create sequence user_seq;"); 
 $res  = pg_query($dbHandle, "create sequence act_seq;");
 // // $res  = pg_query($dbHandle, "create sequence img_seq;");
-// $res  = pg_query($dbHandle, "create sequence cate_seq;");
+$res  = pg_query($dbHandle, "create sequence cate_seq;");
 
 
 // // Create tables
@@ -74,10 +74,10 @@ $res  = pg_query($dbHandle, "create table activity (
 // //               imgid int primary key default nextval('img_seq'),
 // //               imgPath text);");
 
-// // category
-// $res  = pg_query($dbHandle, "create table category (
-//                 cateId  int primary key default nextval('cate_seq'),
-//                 cateName text);");
+// category
+$res  = pg_query($dbHandle, "create table category (
+                cateId  int primary key default nextval('cate_seq'),
+                cateName text);");
 
 
 
@@ -132,19 +132,33 @@ foreach ($activities as $q) {
 // insert into category (catename) values ('Food and Dining');
 // insert into category (catename) values ('Travel and Adventure');
 
+$categories = array(
+  'Sports and Fitness',
+  'Arts and Culture',
+  'Entertainment',
+  'Food and Dining',
+  'Travel and Adventure'
+);
+
+
+$sql = "INSERT INTO category (catename) VALUES ($1)";
+pg_prepare($dbHandle, "insert_category", $sql);
+
+foreach ($categories as $category) {
+  $result = pg_execute($dbHandle, "insert_category", array($category));
+}
+
 // insert users
 $query = "INSERT INTO users (user_id, passwd, user_name, invite_code, activity_list, enroll_list, favo_list, user_email)
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
 
-// 设置要插入的值
 $user_id = 123;
 $passwd = '123';
 $user_name = 'ren';
 $invite_code = '123456';
-$activity_list = '{1, 2, 3}';
+$activity_list = '{2,4}';
 $enroll_list = '{1, 2, 3}';
 $favo_list = '{1, 2, 3}';
 $user_email = 'user@example.com';
 
-// 使用pg_query_params插入数据
 $result = pg_query_params($dbHandle, $query, array($user_id, $passwd, $user_name, $invite_code, $activity_list, $enroll_list, $favo_list, $user_email));

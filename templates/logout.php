@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Game Over</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/cover.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,12 +32,14 @@
         }
     </style>
 </head>
+
 <body>
     <h1>You logout sucessfully.</h1>
     <p>Thank you!</p>
-    <a href="index.php">Return to login page.</a>
-    <form action="?command=login_page" method="post">
+    <a href="index.php">Return to homepage.</a>
+    <!-- <form action="?command=login_page" method="post">
         <button type="submit" class="btn btn-primary">login</button>
-    </form>
+    </form> -->
 </body>
+
 </html>
