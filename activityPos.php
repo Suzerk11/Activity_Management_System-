@@ -282,14 +282,13 @@ $user_id = $_SESSION["user_id"]; ?>
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const postButton = $('.edit-button');
-
       const postModal = new bootstrap.Modal(document.getElementById('postModal'));
       $('.edit-button').on('click', function() {
         let actid = this.getAttribute('data-id');
         // get details data
         // console.log(actid);
-        let data = getDetailsData(actid, (data) => {
+        // anonymous function
+        let data = getDetailsData(actid, function(data) {
           // console.log(data)
           populateForm(data)
         })
@@ -319,25 +318,25 @@ $user_id = $_SESSION["user_id"]; ?>
 
 
       });
-
-      function sendDataToServer(data, actid) {
-        data = JSON.stringify(data)
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'posController.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            // console.log(xhr.responseText);
-            // console.log(JSON.parse(xhr.responseText));
-
-            updateTable(JSON.parse(xhr.responseText));
-
-
-          }
-        };
-        xhr.send('data=' + data + '&actid=' + actid + '&action=edit');
-      }
     });
+
+    function sendDataToServer(data, actid) {
+      data = JSON.stringify(data)
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'posController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // console.log(xhr.responseText);
+          // console.log(JSON.parse(xhr.responseText));
+
+          updateTable(JSON.parse(xhr.responseText));
+
+
+        }
+      };
+      xhr.send('data=' + data + '&actid=' + actid + '&action=edit');
+    }
 
     // fill the form using data
     function populateForm(data) {
@@ -528,6 +527,43 @@ $user_id = $_SESSION["user_id"]; ?>
           console.log(id)
           deleteActivity(id)
         });
+      });
+      const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+
+      $('.edit-button').on('click', function() {
+        let actid = this.getAttribute('data-id');
+        // get details data
+        // console.log(actid);
+        // anonymous function
+        let data = getDetailsData(actid, function(data) {
+          // console.log(data)
+          populateForm(data)
+        })
+        postModal.show();
+
+        const postForm = document.getElementById('postForm');
+        // update edit
+        postForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          let inputs = document.querySelectorAll("#postForm input, textarea, #postForm select");
+          // console.log(inputs);
+          let formData = {}
+          inputs.forEach(function(input) {
+            if (input.id == 'actpic') {
+              formData['actpic'] = [input.value];
+
+            } else {
+              formData[input.id] = input.value;
+            }
+          });
+          // for update
+          console.log(formData);
+          // console.log(actid);
+          sendDataToServer(formData, actid);
+          postModal.hide();
+        });
+
+
       });
 
       // lack of edit button

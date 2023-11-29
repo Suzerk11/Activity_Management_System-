@@ -150,7 +150,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="postForm">
+              <form id="postForm" lang="en">
                 <div class="row mb-2 align-items-center">
                   <label for="actname" class="form-label col-sm-2  mb-0">Name</label>
                   <div class="col-sm-10">
