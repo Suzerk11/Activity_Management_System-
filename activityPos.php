@@ -49,10 +49,10 @@ $user_id = $_SESSION["user_id"]; ?>
           <path d="M896 320H128V160c0-17.6 14.4-32 32-32h704c17.6 0 32 14.4 32 32v160zM320 896H160c-17.6 0-32-14.4-32-32V384h192v512zM864 896H384V384h512v480c0 17.6-14.4 32-32 32z">
           </path>
         </svg><span>Schedule</span></a>
-      <a href="./favourites.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <!-- <a href="./favourites.php" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M519.2 807.2l255.2 133.6c12 6.4 25.6-4 23.2-16.8L748.8 640c-0.8-4.8 0.8-10.4 4.8-14.4L960 424.8c9.6-9.6 4-25.6-8.8-27.2l-284.8-41.6c-5.6-0.8-9.6-4-12-8.8l-128-257.6c-5.6-12-23.2-12-28.8 0L370.4 348c-2.4 4.8-7.2 8-12 8.8L73.6 398.4c-13.6 1.6-18.4 17.6-8.8 27.2l206.4 200.8c4 4 5.6 8.8 4.8 14.4l-48.8 284c-2.4 12.8 11.2 23.2 23.2 16.8L505.6 808c4-3.2 8.8-3.2 13.6-0.8z">
           </path>
-        </svg><span>Favourites</span></a>
+        </svg><span>Favourites</span></a> -->
       <a href="#" class="box"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <path d="M500 128.8c-95.2 5.6-173.6 83.2-180 178.4-7.2 112 80.8 205.6 191.2 205.6 106.4 0 192-86.4 192-192 0.8-110.4-92-198.4-203.2-192zM512 575.2c-128 0-383.2 64-383.2 192v96c0 17.6 14.4 32 32 32h702.4c17.6 0 32-14.4 32-32V766.4c0-127.2-255.2-191.2-383.2-191.2z">
           </path>
@@ -69,7 +69,7 @@ $user_id = $_SESSION["user_id"]; ?>
       <!-- line of posted activities -->
       <div class="d-flex flex-wrap">
         <h1 class="headline">My Posted Activities</h1>
-        <button type="button" class="btn btn-primary mx-1 ms-auto">Post an Activity!</button>
+        <button type="button" class="btn btn-primary mx-1 ms-auto post-button">Post an Activity!</button>
       </div>
       <nav class="navbar bg-body-tertiary mx-1 mt-2 ps-2 card" style="background-color: rgb(red, green, blue,0.5);">
         <div class="container-fluid p-0">
@@ -283,6 +283,31 @@ $user_id = $_SESSION["user_id"]; ?>
 
     document.addEventListener('DOMContentLoaded', function() {
       const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+      $('.post-button').on('click', function() {
+        postModal.show();
+        const postForm = document.getElementById('postForm');
+
+        postForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          let inputs = document.querySelectorAll("#postForm input, textarea, #postForm select");
+          console.log(inputs);
+          let formData = {}
+          inputs.forEach(function(input) {
+            if (input.id == 'actpic') {
+              formData['actpic'] = [input.value];
+
+            } else {
+              formData[input.id] = input.value;
+            }
+          });
+          formData['enrolleduserlist'] = []
+          console.log(formData);
+
+          sendDataToServerCreate(formData);
+          postModal.hide();
+        });
+      });
+
       $('.edit-button').on('click', function() {
         let actid = this.getAttribute('data-id');
         // get details data
@@ -319,6 +344,23 @@ $user_id = $_SESSION["user_id"]; ?>
 
       });
     });
+
+    function sendDataToServerCreate(data) {
+      data = JSON.stringify(data)
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'actController.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // console.log(xhr.responseText);
+          console.log(JSON.parse(xhr.responseText));
+
+          updateTable(JSON.parse(xhr.responseText));
+
+        }
+      };
+      xhr.send('data=' + data + '&action=create');
+    }
 
     function sendDataToServer(data, actid) {
       data = JSON.stringify(data)
