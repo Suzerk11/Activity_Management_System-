@@ -1,2 +1,6 @@
-# web_proj
-This is the final project of web developing class CS4640.
+In this repo, we aim to develop an activity management system for the university faculty and students. Nowadays, plenty of activities are announced via email, and usually, we need to fill out forms or click the links to participate. In that case, it is not quite convenient to check whether we successfully registered. Moreover, most students find it difficult to remember the locations and times of multiple events, and whenever they need to recall specific information, they tend to search in their email, which can be a bit time-consuming. Sometimes, we may miss some activities that we’re interested in because they are swamped in the mailbox. Therefore, to address these issues our target is to build an activity management system with the following main functions:
+1.	Allow users to register, login, and maintain account information.
+2.	Allow users as participants to maintain (add, delete) their arrangements.
+3.	Allow users as the activity poster to maintain (add, delete, update) their activities.
+4.	Allow users to view existing activities and their personal arrangements.
+5.	Allow users to search or filter existing activities using a range of different categories.
