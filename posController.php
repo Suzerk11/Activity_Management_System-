@@ -100,11 +100,11 @@ function editActivity()
   WHERE actid = $actid";
 
   $data = json_decode($_POST['data'], true);
-  // echo $data['actname'];
-  // modify
+
+
   $actPicArray = '{' . implode(',', $data["actpic"]) . '}';
 
-  // 执行带参数的查询
+
   $res = $db->query(
     $query,
     $data["actname"],
