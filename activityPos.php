@@ -348,7 +348,7 @@ $user_id = $_SESSION["user_id"]; ?>
     function sendDataToServerCreate(data) {
       data = JSON.stringify(data)
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'actController.php', true);
+      xhr.open('POST', 'posController.php', true);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {

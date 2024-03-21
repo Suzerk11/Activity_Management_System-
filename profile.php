@@ -49,6 +49,11 @@
       padding-left: 10px;
     }
 
+    .profile-value-nc {
+      width: 80%;
+      padding-left: 10px;
+    }
+
     .profile-edit {
       text-align: right;
       padding-top: 10px;
@@ -69,6 +74,24 @@
       background-color: #d0e0ff;
       cursor: pointer;
       display: none;
+    }
+
+    .logout-link {
+      text-align: center;
+      display: flex;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      justify-content: center;
+    }
+
+    .logout-link:hover {
+      background-color: #0056b3;
+      justify-content: center;
     }
   </style>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -114,6 +137,13 @@
     </div>
 
     <main class="mainbox">
+
+      <nav aria-label="breadcrumb" class="breadcrumb mt-1">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="./homepage.php">Homepage</a></li>
+          <li class="breadcrumb-item active" aria-current="page">My Profile</li>
+        </ol>
+      </nav>
       <div class="col-md-9" id="main-content" style="margin: auto;">
         <nav aria-label="breadcrumb" class="breadcrumb mt-1">
           <ol class="breadcrumb">
@@ -125,15 +155,15 @@
 
           <div class="profile-content">
             <div class="profile-row">
-              <div class="profile-label">digital ID:</div>
-              <div class="profile-value" id="user_id"><?= $_SESSION["user_id"] ?></div>
+              <div class="profile-label">digital ID</div>
+              <div class="profile-value-nc" id="user_id"><?= $_SESSION["user_id"] ?></div>
             </div>
             <div class="profile-row">
-              <div class="profile-label">Name:</div>
+              <div class="profile-label">Name</div>
               <div class="profile-value" id="user_name"><?= $_SESSION["user_name"] ?></div>
             </div>
             <div class="profile-row">
-              <div class="profile-label">Email:</div>
+              <div class="profile-label">Email</div>
               <div class="profile-value" id="profileEmail"><?= $_SESSION["user_email"] ?></div>
             </div>
             <div class="profile-row">
@@ -147,6 +177,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <a href="index.php?command=logout" class="logout-link" style="display: flex;">Logout here</a>
       </div>
     </main>
   </div>

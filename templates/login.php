@@ -24,19 +24,23 @@
                 </div>
 
                 <form action="?command=login" method="post">
-                    <div class="mb-3">
-                        <label class="text-left" for="user_id">digitalID:</label>
-                        <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Please input your ComputingID">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="user_id">Digital ID:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Enter your Computing ID">
+                        </div>
                     </div>
 
-                    <!-- ！！！hide password! by adjusting type -->
-                    <div class="mb-3">
-                        <label class="text-left" for="passwd">password:</label>
-                        <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Please input your password">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="passwd">Password:</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Enter your password">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
+
 
 
 

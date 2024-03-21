@@ -10,14 +10,17 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             text-align: center;
+
             padding: 100px;
         }
 
         h1 {
-            color: #ff3333;
+
+            color: crimson;
         }
 
         p {
+            font-size: 24px;
             color: #666;
         }
 

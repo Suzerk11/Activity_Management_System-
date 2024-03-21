@@ -18,6 +18,22 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   <link rel="stylesheet/less" type="text/css" href="./style/actipage.less">
   <link rel="stylesheet" href="style/homepage.css">
 
+  <style>
+    .logout-link {
+      text-align: center;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-link:hover {
+      background-color: #0056b3;
+    }
+  </style>
   <script>
 
   </script>
@@ -165,7 +181,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
           </div>
         </div>
       </div>
-      <a href="index.php?command=logout">Logout here</a>
+      <!-- <div>
+        <a href="index.php?command=logout" class="logout-link">Logout here</a>
+    </div> -->
     </main>
 
   </div>

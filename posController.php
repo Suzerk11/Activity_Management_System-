@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'search':
       searchActivity();
       break;
-      // case 'create':
-      //   createActivity();
-      //   break;
+    case 'create':
+      createActivity();
+      break;
       // default:
       //   // 处理未知的 action
       //   break;
@@ -121,4 +121,51 @@ function editActivity()
 
   $res = getActivities($user_id);
   echo $res;
+}
+
+function createActivity()
+{
+  session_start();
+  $db = new Database();
+  // $res = $db->query("insert into activity (actName,
+  // actLoc,actDate,actBeginTime,actEndTime,actLimit,actCate,user_id,userEmail,
+  // actDesc,actPic,enrolledUserList) values 
+  //     ($1, $2, $3, $4, $5,$6, $7, $8, $9 ,$10, $11, $12);");
+
+  $query = "INSERT INTO activity (actName, actLoc, actDate, actBeginTime, actEndTime, actLimit, actCate, user_id, userEmail, actDesc, actPic, enrolledUserList) 
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)";
+
+  $data = json_decode($_POST['data'], true);
+  // echo $data['actname'];
+  // modify
+  $actPicArray = '{' . implode(',', $data["actpic"]) . '}';
+  $enrolledUserListArray = '{' . implode(',', $data["enrolleduserlist"]) . '}';
+
+  // 执行带参数的查询
+  $res = $db->query(
+    $query,
+    $data["actname"],
+    $data["actloc"],
+    $data["actdate"],
+    $data["actbegintime"],
+    $data["actendtime"],
+    $data["actlimit"],
+    $data["actcate"],
+    $_SESSION['user_id'],
+    // $data["user_id"],
+    // '1',
+    $data["useremail"],
+    $data["actdesc"],
+    $actPicArray,
+    $enrolledUserListArray
+  );
+  $actid = $db->query('SELECT lastval()')[0]['lastval'];
+  // echo $actid;
+  // should update the user
+  $userId = $_SESSION['user_id'];
+  $db->query("update users set activity_list = array_append(activity_list, $actid) where user_id = $userId");
+
+  $res = $db->query("select * from activity WHERE user_id = $userId order by actid");
+  header('Content-Type: application/json');
+  echo json_encode($res);
 }

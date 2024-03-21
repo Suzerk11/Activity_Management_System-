@@ -25,37 +25,49 @@
 
 
                 <form action="?command=register" method="post">
-                    <div class="form-group">
-                        <label for="user_name">Username:</label>
-                        <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Please input your username">
-                    </div>
-                    <div class="form-group">
-                        <label for="user_id">digitalID:</label>
-                        <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Please input your ComputingID">
-                    </div>
-                    <div class="form-group">
-                        <label for="passwd">password:</label>
-                        <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Please input your password">
-                    </div>
-                    <!-- <a class="btn btn-primary" href="login.html">register</a> -->
-
-                    <div class="form-group">
-                        <label for="invite_code">password:</label>
-                        <input type="text" class="form-control" id="invite_code" name="invite_code" placeholder="Please input your invitecode">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="user_name">Username:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter your username">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="user_email">password:</label>
-                        <input type="text" class="form-control" id="user_email" name="user_email" placeholder="Please input your email">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="user_id">Digital ID:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Enter your Computing ID">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="passwd">Password:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Enter your password">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="invite_code">Invite Code:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="invite_code" name="invite_code" placeholder="Enter your invite code">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="user_email">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter your email">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
+
+
             </div>
         </div>
     </div>
 
-    <!-- 引入Bootstrap JavaScript文件 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
